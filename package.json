@@ -1,0 +1,28 @@
+{
+  "name": "streaming-room",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node .",
+    "dev": "nodemon .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/brunnolou/streaming-room.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/brunnolou/streaming-room/issues"
+  },
+  "homepage": "https://github.com/brunnolou/streaming-room#readme",
+  "dependencies": {
+    "rtmp-server": "^0.2.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.12.1"
+  }
+}
