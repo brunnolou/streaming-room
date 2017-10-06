@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/brunnolou/streaming-room#readme",
   "dependencies": {
+    "node-media-server": "^1.1.2",
     "rtmp-server": "^0.2.0"
   },
   "devDependencies": {
