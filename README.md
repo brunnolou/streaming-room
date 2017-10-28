@@ -17,3 +17,28 @@ Fully operational server and client for streaming and playing.
 Example:
 
 **[ OBS ]** ––rtmp://localhost/live/live––> **[ RTMP Server ]** ––hsl––> **[ HTTP server ]** ––.m3u8––> **[ Videojs HTML5 player ]**
+
+# How to use it
+Clone this repository or download the folder.
+
+Open the project folder in terminal and run:ss
+
+```sh
+npm install
+```
+
+```sh
+npm start
+```
+
+Open you browser in `localhost:3000`
+
+- **Username:** [Anything]
+- **Password:** room1
+
+You can update the default password in `passwords.json`
+
+### Development
+```sh
+npm run dev
+```
