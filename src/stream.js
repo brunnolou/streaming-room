@@ -24,13 +24,14 @@ rtmpServer.on("client", client => {
 
   client.on("publish", ({ streamName }) => {
     del.sync(videoPath + "*");
-
-    rtmpToHLS(streamName, videoPath)
+	
+    rtmpToHLS(streamName, videoPath);
+	/*
       .on("error", err => {
         console.log("an error happened: " + err.message);
       })
-			.run();
-
+	  .run();
+*/
     console.log("PUBLISH", streamName);
   });
 
