@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Meeting room</title>
+	<link href="https://unpkg.com/video.js/dist/video-js.css" rel="stylesheet">
+	<link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+	<ul class="pages">
+		<li class="chat page">
+			<div class="chatArea">
+				<ul class="messages"></ul>
+			</div>
+			<input class="inputMessage" placeholder="..." />
+		</li>
+		<li class="login page">
+			<div class="form">
+				<h3 class="title">What's your name?</h3>
+				<input class="usernameInput js-usernameInput" type="text" maxlength="14" />
+				<h3 class="title">Password</h3>
+				<input class="usernameInput js-passwordInput" type="text" />
+			</div>
+		</li>
+	</ul>
+
+	<div class="videoContainer">
+		<!-- <video id="video" class="video-js vjs-default-skin" controls  width="640" preload="auto" autoplay height="268" data-setup='{}'>
+			<source src="videos/output.m3u8" type="application/x-mpegURL">
+		</video> -->
+	</div>
+
+	<script src="https://unpkg.com/video.js/dist/video.js"></script>
+	<script src="https://unpkg.com/videojs-contrib-hls/dist/videojs-contrib-hls.js"></script>
+
+	<script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+	<!-- based on socket io chat by Grant Timmerman -->
+	<script src="/socket.io/socket.io.js"></script>
+	<script src="/main.js"></script>
+</body>
+
+</html>

@@ -20,8 +20,15 @@
   },
   "homepage": "https://github.com/brunnolou/streaming-room#readme",
   "dependencies": {
-    "node-media-server": "^1.1.2",
-    "rtmp-server": "^0.2.0"
+    "body-parser": "^1.18.2",
+    "cookie-parser": "^1.4.3",
+    "cors": "^2.8.4",
+    "del": "^3.0.0",
+    "express": "^4.16.2",
+    "fluent-ffmpeg": "^2.1.2",
+    "hls-server": "^1.2.2",
+    "rtmp-server": "^0.2.0",
+    "socket.io": "^2.0.3"
   },
   "devDependencies": {
     "nodemon": "^1.12.1"
