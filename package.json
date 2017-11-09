@@ -24,9 +24,11 @@
     "cookie-parser": "^1.4.3",
     "cors": "^2.8.4",
     "del": "^3.0.0",
+    "ejs": "^2.5.7",
     "express": "^4.16.2",
     "fluent-ffmpeg": "^2.1.2",
     "hls-server": "^1.2.2",
+    "i18n": "^0.8.3",
     "rtmp-server": "^0.2.0",
     "socket.io": "^2.0.3"
   },
