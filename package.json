@@ -21,6 +21,7 @@
   "homepage": "https://github.com/brunnolou/streaming-room#readme",
   "dependencies": {
     "body-parser": "^1.18.2",
+    "chalk": "^2.3.0",
     "cookie-parser": "^1.4.3",
     "cors": "^2.8.4",
     "del": "^3.0.0",

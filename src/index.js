@@ -10,6 +10,7 @@ var io = require("socket.io")(server);
 var port = process.env.PORT || 3000;
 var passwords = require("../passwords.json");
 var i18n = require("i18n");
+const chalk = require("chalk");
 
 const isAuth = pass => passwords.some(({ password }) => password === pass);
 
@@ -76,6 +77,17 @@ app.get("/logout", (req, res) => {
 
 // Chatroom.
 var numUsers = 0;
+const usersCount = {};
+const userAdd = (user, x = 1) => {
+  if (!usersCount[user]) {
+    usersCount[user] = 1;
+    return usersCount;
+  }
+
+  usersCount[user] = usersCount[user] + x;
+
+  return usersCount;
+};
 
 io.on("connection", function(socket) {
   var addedUser = false;
@@ -95,6 +107,7 @@ io.on("connection", function(socket) {
 
     // we store the username in the socket session for this client
     socket.username = username;
+    userAdd(username);
     ++numUsers;
     addedUser = true;
     socket.emit("login", {
@@ -106,6 +119,11 @@ io.on("connection", function(socket) {
       username: socket.username,
       numUsers: numUsers
     });
+
+    console.log(chalk.bold("In ") + chalk.green(" > " + socket.username));
+    console.log(JSON.stringify(usersCount, null, '  '));
+    console.log(chalk.bold("Total: ") + chalk.yellow(numUsers));
+    console.log("");
   });
 
   // when the client emits 'typing', we broadcast it to others
@@ -126,12 +144,18 @@ io.on("connection", function(socket) {
   socket.on("disconnect", function() {
     if (addedUser) {
       --numUsers;
+      userAdd(socket.username, -1);
 
       // echo globally that this client has left
       socket.broadcast.emit("user left", {
         username: socket.username,
         numUsers: numUsers
       });
+
+      console.log(chalk.bold("Out") + chalk.red(" < " + socket.username));
+      console.log(JSON.stringify(usersCount, null, '  '));
+      console.log(chalk.bold("Total: ") + chalk.yellow(numUsers));
+      console.log("");
     }
   });
 });
