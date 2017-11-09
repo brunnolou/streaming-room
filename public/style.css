@@ -49,36 +49,45 @@ ul {
   background-color: #000;
 }
 
-.login.page .form {
+.form {
   position: absolute;
   top: 50%;
+  left: 50%;
   width: 100%;
-  height: 100px;
-  margin-top: -200px;
-  text-align: center;
+  max-width: 50em;
+  transform: translate(-60%, -50%);
+  text-align: right;
 }
 
-.login.page .form .usernameInput {
-  background-color: transparent;
+.submit,
+.form .usernameInput {
+  background-color: rgba(255, 255, 255, 0.15);
   border: none;
   border-bottom: 2px solid #fff;
   outline: none;
-  padding-bottom: 15px;
-  text-align: center;
-  width: 400px;
+  padding: 15px;
+  text-align: left;
+  margin-left: 2rem;
+  width: 300px;
 }
 
-.login.page .title {
+.submit {
+  background-color: #fff;
+  color: #000;
+  width: auto;
+}
+
+.title {
   font-size: 200%;
 }
 
-.login.page .usernameInput {
+.usernameInput {
   font-size: 200%;
   letter-spacing: 3px;
 }
 
-.login.page .title,
-.login.page .usernameInput {
+.title,
+.usernameInput {
   color: #fff;
   font-weight: 100;
 }

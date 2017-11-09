@@ -9,6 +9,7 @@ var server = require("http").createServer(app);
 var io = require("socket.io")(server);
 var port = process.env.PORT || 3000;
 var passwords = require("../passwords.json");
+var i18n = require("i18n");
 
 const isAuth = pass => passwords.some(({ password }) => password === pass);
 
@@ -30,13 +31,31 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 app.use("/videos", protect);
-app.use(express.static(path.join(__dirname, "../", "public")));
+app.use(express.static(path.join(__dirname, "..", "public")));
+
+// i18n
+i18n.configure({
+  locales: ["pt", "en"],
+  queryParameter: "lang",
+  directory: path.join(__dirname, "locales")
+});
+app.use(i18n.init);
+
+// View engine.
+app.set("view engine", "ejs");
+app.set("views", path.join(__dirname, "pages"));
+
+app.get("/", function(req, res) {
+  res.render("index", { title: "The index page!" });
+});
 
 app.post("/login", (req, res) => {
+  if (req.signedCookies.username) return res.send({ data: "OK" });
+
   var username = req.body.username;
   var password = req.body.password;
 
-  if (!isAuth(password)) return res.send(401, { error: "Unauthorized" });
+  if (!isAuth(password)) return res.status(401).send({ error: "Unauthorized" });
 
   // read cookies
   let options = {
@@ -50,8 +69,12 @@ app.post("/login", (req, res) => {
   res.send({ username: username });
 });
 
-// Chatroom
+app.get("/logout", (req, res) => {
+  res.cookie("username", "");
+  res.redirect("/");
+});
 
+// Chatroom.
 var numUsers = 0;
 
 io.on("connection", function(socket) {

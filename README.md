@@ -21,7 +21,7 @@ Example:
 # How to use it
 Clone this repository or download the folder.
 
-Open the project folder in terminal and run:ss
+Open the project folder in terminal and run:
 
 ```sh
 npm install

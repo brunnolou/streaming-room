@@ -12,7 +12,6 @@ function getCookie(cname) {
   }
   return "";
 }
-if (!getCookie("username")) localStorage.setItem("username", "");
 
 $(function() {
   var FADE_TIME = 150; // ms
@@ -40,6 +39,7 @@ $(function() {
   var $inputMessage = $(".inputMessage"); // Input message input box
 
   var $page = $(".page");
+  var $form = $(".form");
   var $videoCont = $(".videoContainer");
   var $loginPage = $(".login.page"); // The login page
   var $chatPage = $(".chat.page"); // The chatroom page
@@ -63,15 +63,20 @@ $(function() {
     log(message);
   }
   var user = localStorage.getItem("username") || "";
+
   $usernameInput.val(user);
 
   // Sets the client's username
   function setUsername() {
+    if (!$form[0].checkValidity()) return;
+
     username = cleanInput($usernameInput.val().trim());
 
     var password = cleanInput($passwordInput.val().trim());
 
     if (!username) return;
+
+    localStorage.setItem("username", $usernameInput.val());
 
     // If the username is valid
     $.post("/login", { username: username, password: password })
@@ -82,10 +87,14 @@ $(function() {
               '<source src="videos/output.m3u8" type="application/x-mpegURL">' +
               "</video> "
           );
-          var myPlayer = videojs("video");
+          setTimeout(() => {
+            videojs("video").ready(function() {
+              this.play();
+            });
+          }, 100);
         }
 
-        $loginPage.fadeOut();
+        $loginPage.hide();
         $chatPage.show();
         $page.width("30%");
         $loginPage.off("click");
@@ -93,13 +102,20 @@ $(function() {
 
         // Tell the server your username
         socket.emit("add user", username);
-        localStorage.setItem("username", username);
       })
       .fail(x => {
         username = "";
         alert("Unauthorized");
       });
   }
+
+  setUsername();
+
+  $form.submit(e => {
+    e.preventDefault();
+
+    setUsername();
+  });
 
   // Sends a chat message
   function sendMessage() {
@@ -254,8 +270,6 @@ $(function() {
         sendMessage();
         socket.emit("stop typing");
         typing = false;
-      } else {
-        setUsername();
       }
     }
   });
@@ -268,7 +282,7 @@ $(function() {
 
   // Focus input when clicking anywhere on login page
   $messages.click(function() {
-	$inputMessage.focus();
+    $inputMessage.focus();
   });
 
   // Focus input when clicking on the message input's border
