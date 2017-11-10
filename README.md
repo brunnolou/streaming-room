@@ -9,7 +9,7 @@ Fully operational server and client for streaming and playing.
 - Simple room authentication
 
 **Client:**
-- HTML5 videojs player (supports Chrome, Firefox, iOS, Android)
+- HTML5 VideoJS player (supports Chrome, Firefox, iOS, Android)
 - Chat room with usernames
 - Password protected
 
@@ -18,10 +18,22 @@ Example:
 
 **[ OBS ]** ––rtmp://localhost/live/live––> **[ RTMP Server ]** ––hsl––> **[ HTTP server ]** ––.m3u8––> **[ Videojs HTML5 player ]**
 
+# Requirements
+1. ## Nodejs
+    *For web and rtmp server*
+
+    Download here: https://nodejs.org/en/download/
+
+2. ## FFmpeg
+    *For converting video and audio to HLS (HTML5)*
+
+    Download here: http://ffmpeg.zeranoe.com/builds/
+
+
 # How to use it
 Clone this repository or download the folder.
 
-Open the project folder in terminal and run:
+Open the project folder in <u>terminal</u> and run:
 
 ```sh
 npm install
