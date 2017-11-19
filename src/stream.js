@@ -4,6 +4,7 @@ const rtmpToHLS = require("./rtmpToHLS");
 const del = require("del");
 const chalk = require("chalk");
 
+const { streamKey } = require("../config.json");
 const videoPath = "../public/videos/";
 
 rtmpServer.on("error", err => {
@@ -20,11 +21,18 @@ rtmpServer.on("client", client => {
   });
 
   client.on("play", ({ streamName }) => {
-    console.log(chalk.blue("PLAY"), streamName);
+    console.log(chalk.blue("PLAY   "), streamName);
   });
 
   client.on("publish", ({ streamName }) => {
+    if (streamKey !== streamName) {
+      console.log(chalk.red("Wrong stream key"), streamName);
+
+      return;
+    }
+
     rtmpToHLS(streamName, videoPath);
+
     console.log(chalk.blue("PUBLISH"), streamName);
   });
 

@@ -31,7 +31,7 @@ Example:
 
 
 # How to use it
-Clone this repository or download the folder.
+Clone this repository or [download](https://github.com/brunnolou/streaming-room/archive/master.zip) the code.
 
 Open the project folder in <u>terminal</u> and run:
 
@@ -48,7 +48,7 @@ Open you browser in `localhost:3000`
 - **Username:** [Anything]
 - **Password:** room1
 
-You can update the default password in `passwords.json`
+You might update the default login passwords and stream key in the file: `config.json`
 
 ### Development
 ```sh

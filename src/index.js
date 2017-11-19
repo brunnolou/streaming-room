@@ -1,18 +1,20 @@
 // Setup basic express server
-var express = require("express");
-var cookieParser = require("cookie-parser");
-var cors = require("cors");
-var bodyParser = require("body-parser");
-var app = express();
-var path = require("path");
-var server = require("http").createServer(app);
-var io = require("socket.io")(server);
-var port = process.env.PORT || 3000;
-var passwords = require("../passwords.json");
-var i18n = require("i18n");
+const express = require("express");
+const cookieParser = require("cookie-parser");
+const cors = require("cors");
+const bodyParser = require("body-parser");
+const app = express();
+const path = require("path");
 const chalk = require("chalk");
 
+const server = require("http").createServer(app);
+const io = require("socket.io")(server);
+const i18n = require("i18n");
+const passwords = require("../config.json").passwords;
+
 const isAuth = pass => passwords.some(({ password }) => password === pass);
+
+const port = process.env.PORT || 3000;
 
 server.listen(port, function() {});
 

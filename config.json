@@ -1,0 +1,24 @@
+{
+  "streamKey": "live",
+  "videosPath": "./public/videos/",
+  "hls": {
+    "input": "rtmp:localhost/live/",
+    "maxrate": "400k",
+    "bufsize": "1835k",
+    "output": "output.m3u8"
+  },
+  "passwords": [
+    {
+      "name": "room1",
+      "password": "room1"
+    },
+    {
+      "name": "room2",
+      "password": "room2"
+    },
+    {
+      "name": "room3",
+      "password": "room3"
+    }
+  ]
+}
