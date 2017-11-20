@@ -1,6 +1,9 @@
 const del = require("del");
-const videoPath = "./public/videos/";
+const path = require("path");
+const { videosPath } = require("./config.json");
 
-del.sync([videoPath + "*"]);
+const videoGlob = path.join(__dirname, videosPath, "*");
+
+del.sync([videoGlob]);
 
 require("./src/");
