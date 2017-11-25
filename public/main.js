@@ -78,20 +78,31 @@ $(function() {
 
     localStorage.setItem("username", $usernameInput.val());
 
+    const addVideo = function() {
+      $videoCont.html(
+        '<video id="video" class="video-js vjs-default-skin" controls  width="640" preload="auto" autoplay height="268" data-setup="">' +
+          '<source src="videos/output.m3u8" type="application/x-mpegURL">' +
+          "</video> "
+      );
+
+      setTimeout(function() {
+        videojs("video").ready(function() {
+          this.play();
+        });
+      }, 100);
+    };
+
     // If the username is valid
     $.post("/login", { username: username, password: password })
-      .done(() => {
+      .done(function() {
         if (username !== "Admin") {
-          $videoCont.html(
-            '<video id="video" class="video-js vjs-default-skin" controls  width="640" preload="auto" autoplay height="268" data-setup="">' +
-              '<source src="videos/output.m3u8" type="application/x-mpegURL">' +
-              "</video> "
-          );
-          setTimeout(() => {
-            videojs("video").ready(function() {
-              this.play();
-            });
-          }, 100);
+          (function check() {
+            $.ajax("videos/output.m3u8")
+              .then(addVideo)
+              .fail(function() {
+                setTimeout(check, 1000);
+              });
+          })();
         }
 
         $loginPage.hide();
