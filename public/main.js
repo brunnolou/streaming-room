@@ -40,7 +40,8 @@ $(function() {
 
   var $page = $(".page");
   var $form = $(".form");
-  var $videoCont = $(".videoContainer");
+  var $videoCont = $("#videoContainer");
+  var $adminTools = $("#adminTools");
   var $loginPage = $(".login.page"); // The login page
   var $chatPage = $(".chat.page"); // The chatroom page
 
@@ -53,7 +54,30 @@ $(function() {
 
   var socket = io();
 
+  var addAdminView = function(data) {
+    if (username !== "Admin") return;
+
+    $videoCont.hide();
+    $adminTools.show();
+
+    if (!data) return;
+
+    console.log("data: ", data);
+    const usersCount = data.usersCount;
+    console.log("usersCount: ", usersCount);
+
+    if (!usersCount) return;
+
+    const html = Object.keys(usersCount).map(function(x) {
+      if (usersCount[x]) return "<li><strong>" + x + "</strong></li>";
+      else return "<li><del>" + x + "</del></li>";
+    });
+
+    $adminTools.html("<ul>" + html.join(" ") + "</ul>");
+  };
+
   function addParticipantsMessage(data) {
+    if (data.username === "Admin") return;
     var message = "";
     if (data.numUsers === 1) {
       message += "1 participant";
@@ -61,6 +85,8 @@ $(function() {
       message += "" + data.numUsers + " participants";
     }
     log(message);
+
+    addAdminView(data);
   }
   var user = localStorage.getItem("username") || "";
 
@@ -78,7 +104,7 @@ $(function() {
 
     localStorage.setItem("username", $usernameInput.val());
 
-    const addVideo = function() {
+    var addVideo = function() {
       $videoCont.html(
         '<video id="video" class="video-js vjs-default-skin" controls  width="640" preload="auto" autoplay height="268" data-setup="">' +
           '<source src="videos/output.m3u8" type="application/x-mpegURL">' +
@@ -95,7 +121,10 @@ $(function() {
     // If the username is valid
     $.post("/login", { username: username, password: password })
       .done(function() {
-        if (username !== "Admin") {
+        if (username === "Admin") {
+          addAdminView();
+        } else {
+          // Auto check to display video.
           (function check() {
             $.ajax("videos/output.m3u8")
               .then(addVideo)

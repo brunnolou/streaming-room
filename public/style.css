@@ -156,7 +156,7 @@ ul {
 
 /* Video */
 
-.videoContainer {
+.main {
   position: absolute;
   top: 0;
   right: 0;
@@ -166,6 +166,13 @@ ul {
 
   display: flex;
   align-items: center;
+}
+
+.adminView {
+  background: whitesmoke;
+  font-weight: normal;
+  padding: 3rem;
+  font-size: 3rem;
 }
 
 .video-js {

@@ -9,6 +9,10 @@
   },
   "passwords": [
     {
+      "name": "Admin",
+      "password": "root"
+    },
+    {
       "name": "room1",
       "password": "room1"
     },

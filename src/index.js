@@ -12,7 +12,17 @@ const io = require("socket.io")(server);
 const i18n = require("i18n");
 const passwords = require("../config.json").passwords;
 
-const isAuth = pass => passwords.some(({ password }) => password === pass);
+const isAuth = (username, pass) => {
+  if (username === "Admin") {
+    const userPass = passwords.find(x => x.name === "Admin");
+
+    if (!userPass) return;
+
+    return userPass.password === pass;
+  }
+
+  return passwords.some(({ password }) => password === pass);
+};
 
 const port = process.env.PORT || 3000;
 
@@ -58,7 +68,8 @@ app.post("/login", (req, res) => {
   var username = req.body.username;
   var password = req.body.password;
 
-  if (!isAuth(password)) return res.status(401).send({ error: "Unauthorized" });
+  if (!isAuth(username, password))
+    return res.status(401).send({ error: "Unauthorized" });
 
   // read cookies
   let options = {
@@ -112,18 +123,23 @@ io.on("connection", function(socket) {
     userAdd(username);
     ++numUsers;
     addedUser = true;
+
+    if (usersCount.Admin) delete usersCount.Admin;
+
     socket.emit("login", {
-      numUsers: numUsers
+      numUsers: numUsers,
+      usersCount
     });
 
     // echo globally (all clients) that a person has connected
     socket.broadcast.emit("user joined", {
       username: socket.username,
-      numUsers: numUsers
+      numUsers: numUsers,
+      usersCount
     });
 
     console.log(chalk.bold("In ") + chalk.green(" > " + socket.username));
-    console.log(JSON.stringify(usersCount, null, '  '));
+    console.log(JSON.stringify(usersCount, null, "  "));
     console.log(chalk.bold("Total: ") + chalk.yellow(numUsers));
     console.log("");
   });
@@ -151,11 +167,12 @@ io.on("connection", function(socket) {
       // echo globally that this client has left
       socket.broadcast.emit("user left", {
         username: socket.username,
-        numUsers: numUsers
+        numUsers: numUsers,
+        usersCount
       });
 
       console.log(chalk.bold("Out") + chalk.red(" < " + socket.username));
-      console.log(JSON.stringify(usersCount, null, '  '));
+      console.log(JSON.stringify(usersCount, null, "  "));
       console.log(chalk.bold("Total: ") + chalk.yellow(numUsers));
       console.log("");
     }
