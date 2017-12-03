@@ -75,6 +75,7 @@ ul {
   background-color: #fff;
   color: #000;
   width: auto;
+  cursor: pointer;
 }
 
 .title {
@@ -169,10 +170,15 @@ ul {
 }
 
 .adminView {
+  display: none;
   background: whitesmoke;
   font-weight: normal;
   padding: 3rem;
   font-size: 3rem;
+}
+
+.adminView.visible {
+  display: block;
 }
 
 .video-js {

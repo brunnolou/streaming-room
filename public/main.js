@@ -58,13 +58,11 @@ $(function() {
     if (username !== "Admin") return;
 
     $videoCont.hide();
-    $adminTools.show();
+    $adminTools.addClass('visible');
 
     if (!data) return;
 
-    console.log("data: ", data);
     const usersCount = data.usersCount;
-    console.log("usersCount: ", usersCount);
 
     if (!usersCount) return;
 
@@ -73,7 +71,7 @@ $(function() {
       else return "<li><del>" + x + "</del></li>";
     });
 
-    $adminTools.html("<ul>" + html.join(" ") + "</ul>");
+    $adminTools.find('.content').html("<ul>" + html.join(" ") + "</ul>");
   };
 
   function addParticipantsMessage(data) {
@@ -92,6 +90,33 @@ $(function() {
 
   $usernameInput.val(user);
 
+
+  var addVideo = function() {
+    const id = 'video' + (new Date()).getTime();
+
+    $videoCont.html(
+      '<video id="' + id + '" class="video-js vjs-default-skin" controls  width="640" preload="auto" autoplay height="268" data-setup="">' +
+        '<source src="videos/output.m3u8" type="application/x-mpegURL">' +
+        "</video> "
+    );
+
+    setTimeout(function() {
+      videojs(id).ready(function() {
+        this.play();
+      });
+    }, 100);
+  };
+
+  function autoCheck(callback) {
+    (function check() {
+      $.ajax("videos/output.m3u8")
+        .then(callback)
+        .fail(function() {
+          setTimeout(check, 1000);
+        });
+    })();
+  }
+
   // Sets the client's username
   function setUsername() {
     if (!$form[0].checkValidity()) return;
@@ -104,20 +129,6 @@ $(function() {
 
     localStorage.setItem("username", $usernameInput.val());
 
-    var addVideo = function() {
-      $videoCont.html(
-        '<video id="video" class="video-js vjs-default-skin" controls  width="640" preload="auto" autoplay height="268" data-setup="">' +
-          '<source src="videos/output.m3u8" type="application/x-mpegURL">' +
-          "</video> "
-      );
-
-      setTimeout(function() {
-        videojs("video").ready(function() {
-          this.play();
-        });
-      }, 100);
-    };
-
     // If the username is valid
     $.post("/login", { username: username, password: password })
       .done(function() {
@@ -125,13 +136,7 @@ $(function() {
           addAdminView();
         } else {
           // Auto check to display video.
-          (function check() {
-            $.ajax("videos/output.m3u8")
-              .then(addVideo)
-              .fail(function() {
-                setTimeout(check, 1000);
-              });
-          })();
+          autoCheck(addVideo);
         }
 
         $loginPage.hide();
@@ -186,6 +191,7 @@ $(function() {
   function addChatMessage(data, options) {
     // Don't fade the message in if there is an 'X was typing'
     var $typingMessages = getTypingMessages(data);
+
     options = options || {};
     if ($typingMessages.length !== 0) {
       options.fade = false;
@@ -346,6 +352,12 @@ $(function() {
   // Whenever the server emits 'new message', update the chat body
   socket.on("new message", function(data) {
     addChatMessage(data);
+  });
+
+  // Whenever the server emits 'restart', auto checks for new video
+  socket.on("restart", function(data) {
+    if (username === 'Admin') return;
+    autoCheck(addVideo);
   });
 
   // Whenever the server emits 'user joined', log it in the chat body
