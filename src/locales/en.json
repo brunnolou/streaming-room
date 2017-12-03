@@ -1,6 +1,7 @@
 {
-  "MEETING_ROOM": "Meeting room",
-  "WHAT_S_YOUR_NAME": "Your name:",
-  "PASSWORD": "Password:",
-  "ENTER": "ENTER"
+	"MEETING_ROOM": "Meeting room",
+	"WHAT_S_YOUR_NAME": "Your name:",
+	"PASSWORD": "Password:",
+	"ENTER": "ENTER",
+	"CHAT": "💬"
 }

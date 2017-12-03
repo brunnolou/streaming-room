@@ -8,24 +8,32 @@
   </title>
   <link href="https://unpkg.com/video.js/dist/video-js.css" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
+  <meta name='viewport' , content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' />
 </head>
 
 <body>
-  <ul class="pages">
-    <li class="chat page">
+  <header class="toolbar js-toolbar">
+    <button class="toolbarButton js-toggle-chat">
+      <%= __('CHAT') %>
+    </button>
+  </header>
+
+  <div class="pages">
+    <section class="chat page js-page js-chat">
       <div class="chatArea">
-        <ul class="messages"></ul>
+        <ul class="messages js-messages"></ul>
       </div>
-      <input class="inputMessage" placeholder="..." />
-    </li>
-    <li class="login page">
-      <form class="form">
+      <input class="inputMessage js-inputMessage" placeholder="..." />
+    </section>
+
+    <section class="login page js-page js-login">
+      <form class="loginForm js-form">
         <p>
           <label for="username" class="title">
             <%= __('WHAT_S_YOUR_NAME') %>
           </label>
-          <input id="username" class="usernameInput js-usernameInput" type="text" maxlength="14" required/>
 
+          <input id="username" class="usernameInput js-usernameInput" type="text" maxlength="14" required/>
         </p>
 
         <p>
@@ -42,8 +50,8 @@
         </p>
 
       </form>
-    </li>
-  </ul>
+    </section>
+  </div>
 
   <main id="videoContainer" class="main">
     <div class="spinner">

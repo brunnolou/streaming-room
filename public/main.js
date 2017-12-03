@@ -33,17 +33,20 @@ $(function() {
 
   // Initialize variables
   var $window = $(window);
+  var $body = $('body');
   var $usernameInput = $(".js-usernameInput"); // Input for username
   var $passwordInput = $(".js-passwordInput"); // Input for username
-  var $messages = $(".messages"); // Messages area
-  var $inputMessage = $(".inputMessage"); // Input message input box
+  var $messages = $(".js-messages"); // Messages area
+  var $inputMessage = $(".js-inputMessage"); // Input message input box
 
-  var $page = $(".page");
-  var $form = $(".form");
+  var $page = $(".js-page");
+  var $form = $(".js-form");
   var $videoCont = $("#videoContainer");
   var $adminTools = $("#adminTools");
-  var $loginPage = $(".login.page"); // The login page
-  var $chatPage = $(".chat.page"); // The chatroom page
+  var $loginPage = $(".js-login"); // The login page
+  var $chatPage = $(".js-chat"); // The chatroom page
+  var $toolbar = $(".js-toolbar");
+  var $toggleChat = $(".js-toggle-chat");
 
   // Prompt for setting a username
   var username;
@@ -134,6 +137,7 @@ $(function() {
       .done(function() {
         if (username === "Admin") {
           addAdminView();
+          $body.addClass('show-chat');
         } else {
           // Auto check to display video.
           autoCheck(addVideo);
@@ -141,7 +145,7 @@ $(function() {
 
         $loginPage.hide();
         $chatPage.show();
-        $page.width("30%");
+        $toolbar.show();
         $loginPage.off("click");
         $currentInput = $inputMessage.focus();
 
@@ -325,6 +329,9 @@ $(function() {
   });
 
   // Click events
+  $toggleChat.click(function() {
+    $body.toggleClass('show-chat');
+  });
 
   // Focus input when clicking anywhere on login page
   $messages.click(function() {
