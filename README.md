@@ -1,10 +1,10 @@
-# Streaming room in Node.js, rtmp, hsl, html5
+# Streaming room in Node.js, RTMP, HSL, html5
 Fully operational server and client for streaming and playing.
 
 ## Features
 **Server:**
-- Has a **rtmp server** to receive streaming (e.g. from OBS studio)
-- Converts **rtmp** ro **hsl** when a **rtmp** is published
+- Has a **RTMP server** to receive streaming (e.g. from OBS studio)
+- Converts **RTMP** to **HSL** when a **RTMP** is published
 - WebSocket server for counting participants
 - Simple room authentication
 
@@ -20,7 +20,7 @@ Example:
 
 # Requirements
 1. ## Nodejs
-    *For web and rtmp server*
+    *For web and RTMP server*
 
     Download here: https://nodejs.org/en/download/
 
@@ -42,7 +42,7 @@ npm install
 npm start
 ```
 
-Open you browser in `localhost:3000`
+Open your browser in `localhost:3000`
 
 - **Username:** [Anything]
 - **Password:** room1
