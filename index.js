@@ -1,9 +1,4 @@
-const del = require("del");
-const path = require("path");
-const { videosPath } = require("./config.json");
+const App = require('./src/');
 
-const videoGlob = path.join(__dirname, videosPath, "*");
-
-del.sync([videoGlob]);
-
-require("./src/");
+// Init app.
+App();
