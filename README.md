@@ -29,11 +29,10 @@ Example:
 
     Download here: http://ffmpeg.zeranoe.com/builds/
 
-
 # How to use it
 Clone this repository or [download](https://github.com/brunnolou/streaming-room/archive/master.zip) the code.
 
-Open the project folder in <u>terminal</u> and run:
+Open the project folder in **terminal** and run:
 
 ```sh
 npm install
@@ -49,6 +48,9 @@ Open you browser in `localhost:3000`
 - **Password:** room1
 
 You might update the default login passwords and stream key in the file: `config.json`
+
+## Windows installation
+Check the [windows installation guide here](https://github.com/brunnolou/streaming-room/blob/master/windows/README.md)
 
 ### Development
 ```sh
