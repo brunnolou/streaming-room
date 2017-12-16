@@ -1,6 +1,11 @@
 const del = require('del');
 const path = require('path');
 const { passwords, videosPath } = require('../config.json');
+const chalk = require('chalk');
+
+const log = (data, color = 'blue') => {
+  console.log(chalk[color](data));
+};
 
 const deleteVideos = () => {
   const videoGlob = path.join(__dirname, '..', videosPath, '*');
@@ -23,4 +28,5 @@ const isAuth = (username, pass) => {
 module.exports = {
   isAuth,
   deleteVideos,
+  log,
 };
