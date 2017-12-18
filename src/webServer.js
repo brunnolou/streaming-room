@@ -4,8 +4,10 @@ const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const i18n = require('i18n');
 const path = require('path');
+const ip = require('my-ip');
+const publicIp = require('public-ip');
 
-const { isAuth } = require('./utils');
+const { isAuth, log } = require('./utils');
 
 const port = process.env.PORT || 3000;
 
@@ -18,7 +20,18 @@ const protect = (req, res, next) => {
 };
 
 function webServer(app, server) {
-  server.listen(port, 'localhost', () => console.log(`\nhttp://localhost:${port}\n`));
+  server.listen(port, '0.0.0.0', () => {
+    log('');
+    log('Web server is running on:', 'white');
+    log(`http://localhost:${port}`);
+    log(`http://${ip()}:${port}`);
+
+    publicIp.v4().then((v4) => {
+      log('Your external IP is:', 'white');
+      log(`http://${v4}`);
+      log('');
+    });
+  });
 
   // Cookie secret.
   const secret = 'Mmm98N)8bewd88';
