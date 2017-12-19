@@ -116,9 +116,8 @@ ul {
 
 .toolbar {
   position: fixed;
-  top: 0;
+  top: 4rem;
   left: 0;
-  right: 0;
   z-index: 4;
 
   display: none;
