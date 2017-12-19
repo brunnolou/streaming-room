@@ -1,6 +1,5 @@
 const path = require('path');
-const { exec } = require('child_process');
-const { log } = require('./utils');
+const { log, execute } = require('./utils');
 const {
   hls: {
     input, maxrate, bufsize, output, numberOfTries, delayOfTries,
@@ -29,7 +28,7 @@ const rtmpToHLS = (tries = 0) => {
     ' -hls_wrap 10' +
     ' -start_number 1 '}${path.join(videosPath, output)}`;
 
-  exec(command, (err, stdout, stderr) => {
+  execute(command, (err, stdout, stderr) => {
     if (err) {
       if (tries >= numberOfTries) {
         log('FFmpeg error:', 'red');

@@ -9,7 +9,8 @@ function server(socket) {
   rtmpServer.listen(1935);
 
   rtmpServer.on('error', (err) => {
-    throw err;
+    log('RTMP server error:', 'yellow');
+    log(err, 'yellow');
   });
 
   rtmpServer.on('client', (client) => {

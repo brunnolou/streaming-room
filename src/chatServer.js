@@ -1,19 +1,22 @@
 const chalk = require('chalk');
 
-const { deleteVideos } = require('./utils');
+const { deleteVideos, stringify, log } = require('./utils');
 
 let numUsers = 0;
 const usersCount = {};
+const sum = x => Object.values(x).reduce((acc, v) => acc + v, 0);
 const userAdd = (user, x = 1) => {
+  if (user === 'Admin') return sum(usersCount);
+
   if (!usersCount[user]) {
     usersCount[user] = 1;
 
-    return usersCount;
+    return sum(usersCount);
   }
 
   usersCount[user] += x;
 
-  return usersCount;
+  return sum(usersCount);
 };
 
 // io -> Promise -> socket
@@ -43,8 +46,8 @@ function chatServer(io) {
 
         // we store the username in the socket session for this client
         socket.username = username;
-        userAdd(username);
-        numUsers += 1;
+
+        numUsers = userAdd(username);
         addedUser = true;
 
         if (usersCount.Admin) delete usersCount.Admin;
@@ -58,10 +61,10 @@ function chatServer(io) {
           usersCount,
         });
 
+        log('-----------------------');
         console.log(chalk.bold('In ') + chalk.green(` > ${socket.username}`));
-        console.log(JSON.stringify(usersCount, null, '  '));
+        console.log(stringify(usersCount));
         console.log(chalk.bold('Total: ') + chalk.yellow(numUsers));
-        console.log('');
       });
 
       // When the client emits 'typing', we broadcast it to others
@@ -76,8 +79,7 @@ function chatServer(io) {
       // When the user disconnects.
       socket.on('disconnect', () => {
         if (addedUser) {
-          numUsers -= 1;
-          userAdd(socket.username, -1);
+          numUsers = userAdd(socket.username, -1);
 
           // echo globally that this client has left
           socket.broadcast.emit('user left', {
@@ -86,10 +88,10 @@ function chatServer(io) {
             usersCount,
           });
 
+          log('-----------------------');
           console.log(chalk.bold('Out') + chalk.red(` < ${socket.username}`));
-          console.log(JSON.stringify(usersCount, null, '  '));
+          console.log(stringify(usersCount));
           console.log(chalk.bold('Total: ') + chalk.yellow(numUsers));
-          console.log('');
         }
       });
     });
