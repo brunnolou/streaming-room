@@ -104,10 +104,10 @@ $(function() {
     );
 
     setTimeout(function() {
-      videojs(id).ready(function() {
+      videojs(id, { "autoplay": true }).ready(function() {
         this.play();
       });
-    }, 100);
+    }, 200);
   };
 
   function autoCheck(callback) {
