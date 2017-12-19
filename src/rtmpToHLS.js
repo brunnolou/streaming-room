@@ -1,4 +1,5 @@
 const path = require('path');
+const ffmpeg = require('@ffmpeg-installer/ffmpeg');
 const { log, execute } = require('./utils');
 const {
   hls: {
@@ -9,8 +10,7 @@ const {
 } = require('../config.json');
 
 const rtmpToHLS = (tries = 0) => {
-  const command = `${'ffmpeg ' +
-    ` -i ${input}${streamKey} ` +
+  const command = `${`${ffmpeg.path} -i ${input}${streamKey} ` +
     ` -maxrate ${maxrate}` +
     ` -bufsize ${bufsize}` +
     ' -v verbose ' +

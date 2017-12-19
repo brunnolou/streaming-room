@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/brunnolou/streaming-room#readme",
   "dependencies": {
+    "@ffmpeg-installer/ffmpeg": "^1.0.13",
     "body-parser": "^1.18.2",
     "chalk": "^2.3.0",
     "cookie-parser": "^1.4.3",
