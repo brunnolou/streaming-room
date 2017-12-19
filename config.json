@@ -9,6 +9,7 @@
     "delayOfTries": 2000,
     "output": "output.m3u8"
   },
+  "maxBuffer": 5120,
   "passwords": [
     {
       "name": "Admin",
