@@ -26,11 +26,14 @@ function webServer(app, server) {
     log(`http://localhost:${port}`);
     log(`http://${ip()}:${port}`);
 
-    publicIp.v4().then((v4) => {
-      log('Your external IP is:', 'white');
-      log(`http://${v4}`);
-      log('');
-    });
+    publicIp
+      .v4()
+      .then((v4) => {
+        log('Your external IP is:', 'white');
+        log(`http://${v4}`);
+        log('');
+      })
+      .catch(() => log('Cannot get external IP'));
   });
 
   // Cookie secret.

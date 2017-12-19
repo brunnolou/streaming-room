@@ -34,7 +34,9 @@ function server(socket) {
     });
 
     client.on('stop', () => {
-      deleteVideos();
+      setTimeout(() => {
+        deleteVideos();
+      }, 2000);
       socket.broadcast.emit('restart', {});
       socket.broadcast.emit('disconeted', {});
       log('DISCONNECTED', 'red');
