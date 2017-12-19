@@ -1,14 +1,15 @@
 const path = require('path');
 const { exec } = require('child_process');
+const { log } = require('./utils');
 const {
   hls: {
-    input, maxrate, bufsize, output,
+    input, maxrate, bufsize, output, numberOfTries, delayOfTries,
   },
   videosPath,
   streamKey,
 } = require('../config.json');
 
-const rtmpToHLS = () => {
+const rtmpToHLS = (tries = 0) => {
   const command = `${'ffmpeg ' +
     ` -i ${input}${streamKey} ` +
     ` -maxrate ${maxrate}` +
@@ -30,7 +31,17 @@ const rtmpToHLS = () => {
 
   exec(command, (err, stdout, stderr) => {
     if (err) {
-      console.log('ffmpeg error: ', err);
+      if (tries >= numberOfTries) {
+        log('FFmpeg error:', 'red');
+        log(err, 'red');
+      } else {
+        log(`FFmpeg error retrying in ${delayOfTries}ms — ${tries + 1} of ${numberOfTries}`, 'red');
+
+        setTimeout(() => {
+          rtmpToHLS(tries + 1);
+        }, delayOfTries);
+      }
+
       return;
     }
 

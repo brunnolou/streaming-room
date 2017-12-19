@@ -1,14 +1,7 @@
 const RtmpServer = require('rtmp-server');
-const chalk = require('chalk');
 const rtmpToHLS = require('./rtmpToHLS');
 const { streamKey } = require('../config.json');
-const { deleteVideos } = require('./utils');
-
-const videoPath = '../public/videos/';
-
-const log = (data, color = 'blue') => {
-  console.log(chalk[color](data));
-};
+const { deleteVideos, log } = require('./utils');
 
 function server(socket) {
   const rtmpServer = new RtmpServer();
@@ -32,7 +25,7 @@ function server(socket) {
       }
 
       deleteVideos();
-      rtmpToHLS(streamName, videoPath);
+      rtmpToHLS();
       socket.broadcast.emit('restart', {});
       socket.broadcast.emit('published', {});
 
