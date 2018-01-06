@@ -189,7 +189,7 @@ ul {
   top: 0;
   left: 0;
   bottom: 0;
-  background: #333;
+  background: #394039;
 
   display: flex;
   width: 100%;
@@ -252,6 +252,12 @@ ul {
   bottom: 0;
   -webkit-animation-delay: -1s;
   animation-delay: -1s;
+}
+
+.video-js .vjs-big-play-button {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 @-webkit-keyframes sk-rotate {
