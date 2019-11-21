@@ -24,11 +24,6 @@ Example:
 
     Download here: https://nodejs.org/en/download/
 
-2. ## FFmpeg
-    *For converting video and audio to HLS (HTML5)*
-
-    Download here: http://ffmpeg.zeranoe.com/builds/
-
 # How to use it
 Clone this repository or [download](https://github.com/brunnolou/streaming-room/archive/master.zip) the code.
 
