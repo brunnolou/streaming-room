@@ -4,15 +4,7 @@
 
    Download here: https://nodejs.org/en/download/
 
-2. ## Install FFmpeg
-
-   Download here: http://ffmpeg.zeranoe.com/builds/
-
-   One important step is to define the `path` **environment variable**. I
-   recommend watching this or another video to know how to install:
-   https://www.youtube.com/watch?v=xcdTIDHm4KM
-
-3. ## Download Streaming Room
+2. ## Download Streaming Room
 
    Clone this repository or
    [download](https://github.com/brunnolou/streaming-room/archive/master.zip)
@@ -23,7 +15,7 @@
 
    Unzip and put the code in the final destination.
 
-4. ## Install Streaming Room
+3. ## Install Streaming Room
 
    Open the project folder in **terminal** and run:
 
@@ -37,7 +29,7 @@
    npm start
    ```
 
-5. ## Open the web browser
+4. ## Open the web browser
 
    http://localhost:3000
 
@@ -55,7 +47,7 @@
    Password: room1
    ```
 
-6. ## Start the stream
+5. ## Start the stream
 
    Using the software of your choice, stream the `RTMP` video to the Streaming
    Room with the following settings:
